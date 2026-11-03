@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>读三国 · 演义与志</title>
+<meta name="description" content="三国演义 × 三国志 双书对照导读：七实三虚对照墙 + 120回/65卷双点亮墙">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<meta name="theme-color" content="#F7F2E7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Noto Serif SC","Songti SC",STSong,serif;background:#F7F2E7;color:#2A2620;letter-spacing:.01em;min-height:100vh;padding:0 18px calc(70px+env(safe-area-inset-bottom));overflow-x:hidden}
+.wrap{max-width:660px;margin:0 auto}
+header{padding:50px 4px 0;text-align:center}
+.brush{font-family:"Ma Shan Zheng","Noto Serif SC",serif;font-size:44px;line-height:1.2;color:#2A2620}
+.brush em{font-style:normal;color:#A63B2A}
+.en{font-size:10.5px;letter-spacing:.34em;color:#8A7440;text-transform:uppercase;margin-top:8px}
+.lead{font-size:14px;line-height:2;color:#5C574C;margin-top:14px;text-align:left}
+.lead b{color:#A63B2A}
+/* 双书卡 */
+.books{display:flex;gap:10px;margin:24px 2px 0}
+.bk{flex:1;background:#FFFBF2;border:1px solid #E5DCC8;border-radius:6px;padding:18px 16px;box-shadow:0 2px 8px rgba(90,70,40,.07);position:relative;overflow:hidden}
+.bk:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c)}
+.bk .nm{font-size:21px;font-weight:900;letter-spacing:.06em}
+.bk .en2{font-size:9.5px;letter-spacing:.3em;color:#8A7440;margin-top:2px}
+.bk .row{font-size:12.5px;color:#5C574C;margin-top:9px;line-height:1.65}
+.bk .row b{color:#2A2620;font-weight:600}
+.bk .tg{display:inline-block;margin-top:10px;font-size:11px;color:var(--c);border:1px solid var(--c);padding:3px 9px;border-radius:2px}
+.vs{display:flex;flex-direction:column;align-items:center;justify-content:center;width:26px;flex:none;color:#B3A88F}
+.vs span{font-family:Georgia,serif;font-size:12px;letter-spacing:.1em}
+/* 读法 */
+.h2{display:flex;align-items:baseline;gap:10px;margin:38px 4px 14px}
+.h2 .t{font-size:22px;font-weight:900;letter-spacing:.08em}
+.h2 .e{font-size:10px;color:#8A7440;letter-spacing:.26em}
+.paths .pt{background:#FFFBF2;border:1px solid #E5DCC8;border-radius:6px;padding:16px 18px;margin-bottom:10px}
+.paths .pt .h{font-size:15px;font-weight:600;color:#A63B2A}
+.paths .pt .d{font-size:13.5px;line-height:1.95;color:#4A463D;margin-top:6px}
+/* 对照墙 */
+.cmp-hint{font-size:12.5px;color:#8A8375;margin:0 4px 14px;line-height:1.8}
+.kbars{display:flex;gap:6px;flex-wrap:wrap;margin:0 4px 14px}
+.kb{font-size:11.5px;padding:5px 12px;border-radius:999px;border:1px solid #D8CFBB;color:#8A8375;background:#FFFBF2}
+.kb.on{background:#2A2620;color:#F7F2E7;border-color:#2A2620}
+.kb i{font-style:normal;opacity:.7;margin-left:4px}
+.cd{background:#FFFBF2;border:1px solid #E5DCC8;border-radius:6px;margin-bottom:10px;overflow:hidden}
+.cd .hd{display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer}
+.cd .hd:active{background:#F6EFDF}
+.cd .ck{width:24px;height:24px;border:1.6px solid #C9BEA5;border-radius:4px;flex:none;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.cd .ck svg{width:14px;height:14px;opacity:0;transform:scale(.4);transition:all .22s cubic-bezier(.2,1.6,.4,1)}
+.cd.on .ck{background:#A63B2A;border-color:#A63B2A}
+.cd.on .ck svg{opacity:1;transform:scale(1)}
+.cd .tt{flex:1;min-width:0;font-size:16.5px;font-weight:600}
+.cd.on .tt{color:#B3A88F}
+.cd .kk{flex:none;font-size:10.5px;padding:3px 8px;border-radius:2px;letter-spacing:.1em}
+.kk.yi{color:#8A7440;border:1px solid #C9B47E}
+.kk.xu{color:#A63B2A;border:1px solid #D8A08E}
+.kk.an{color:#5C574C;border:1px solid #B3A88F}
+.cd .bd{display:none;padding:0 16px 16px 52px}
+.cd.open .bd{display:block}
+.cd .bd h5{font-size:11px;letter-spacing:.2em;margin-bottom:4px}
+.cd .bd h5.yy{color:#8A7440}.cd .bd h5.sz{color:#A63B2A;margin-top:12px}
+.cd .bd p{font-size:13.5px;line-height:1.95;color:#4A463D}
+.cd .bd .src{font-size:11px;color:#B3A88F;margin-top:6px;letter-spacing:.06em}
+.cd .bd .arr{display:inline-block;transform:rotate(90deg);transition:transform .2s;color:#B3A88F;font-size:12px}
+.cd.open .hd .tt:after{content:" ▾";color:#C9BEA5;font-size:11px}
+/* 点亮墙通用 */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 4px 12px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tb{flex:none;font-size:13px;padding:8px 15px;border-radius:3px;background:#FFFBF2;border:1px solid #E5DCC8;color:#5C574C;white-space:nowrap}
+.tb.on{background:#2A2620;color:#F7F2E7;border-color:#2A2620}
+.tb i{font-style:normal;opacity:.65;font-size:11px;margin-left:5px}
+.wl{border-top:1px solid #E0D6C0}
+.rw{display:flex;align-items:center;gap:12px;padding:12px 8px;border-bottom:1px solid #E8E0CC;cursor:pointer}
+.rw:active{background:#F6EFDF}
+.rw .ck{width:22px;height:22px;border:1.5px solid #C9BEA5;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.rw .ck svg{width:13px;height:13px;opacity:0;transform:scale(.4);transition:all .2s cubic-bezier(.2,1.6,.4,1)}
+.rw.on .ck{background:#A63B2A;border-color:#A63B2A}
+.rw.on .ck svg{opacity:1;transform:scale(1)}
+.rw .no{font-family:Georgia,serif;font-size:10.5px;color:#B3A88F;letter-spacing:.08em;width:34px;flex:none}
+.rw.on .no{color:#D8A08E}
+.rw .ti{flex:1;font-size:14.5px;line-height:1.55}
+.rw.on .ti{color:#B3AB98;text-decoration:none}
+.part-desc{font-size:12.5px;color:#8A8375;padding:14px 4px 10px;line-height:1.8;border-bottom:1px dashed #E0D6C0}
+.rw.on .ti{color:#B3AB98}
+/* 进度 */
+.dprog{background:#FFFBF2;border:1px solid #E5DCC8;border-radius:6px;padding:16px 18px;margin:14px 2px 0}
+.dp{display:flex;align-items:center;gap:12px;margin:6px 0}
+.dp .lb{font-size:13.5px;width:84px;flex:none;color:#4A463D}
+.dp .bar{flex:1;height:6px;background:#EFE8D6;border-radius:3px;overflow:hidden}
+.dp .fi{height:100%;background:var(--c);border-radius:3px;transition:width .4s}
+.dp .vv{font-family:Georgia,serif;font-size:12px;color:#8A8375;width:64px;flex:none;text-align:right}
+/* 今日 */
+.today{background:#FFFBF2;border:1.5px dashed #C9A24A;border-radius:6px;padding:16px 18px;margin:16px 2px 0;position:relative}
+.today .lab{font-size:10.5px;color:#8A7440;letter-spacing:.24em}
+.today .pick{font-size:18px;font-weight:600;margin-top:6px;line-height:1.5}
+.today .sub2{font-size:12px;color:#8A8375;margin-top:4px}
+.seg{display:flex;gap:0;margin:14px 2px 0;border:1px solid #E5DCC8;border-radius:4px;overflow:hidden}
+.seg .s{flex:1;padding:10px 0;text-align:center;font-size:13.5px;background:#FFFBF2;color:#8A8375;cursor:pointer}
+.seg .s.on{background:#2A2620;color:#F7F2E7}
+/* 印章 */
+.stamp-wrap{margin:34px 0 8px;text-align:center;display:none}
+.stamp{display:inline-block;padding:16px 30px;border:3px solid #A63B2A;border-radius:8px;color:#A63B2A;font-weight:900;font-size:19px;letter-spacing:.3em;transform:rotate(-5deg);background:rgba(166,59,42,.03);position:relative}
+.stamp small{display:block;font-family:Georgia,serif;font-weight:400;font-size:10px;letter-spacing:.32em;color:#A63B2A;margin-bottom:5px}
+.stamp:after{content:"";position:absolute;inset:4px;border:1px solid rgba(166,59,42,.4);border-radius:5px}
+footer{margin-top:32px;text-align:center;font-size:11.5px;color:#B3A88F;line-height:1.9;padding:0 10px}
+.toast{position:fixed;left:50%;bottom:calc(30px+env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#2A2620;color:#F7F2E7;font-size:13px;padding:10px 20px;border-radius:2px;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:9;letter-spacing:.08em}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="brush">读<em>·</em>三国</div>
+<div class="en">THREE KINGDOMS · TWO BOOKS</div>
+<div class="lead">一提三国，你脑子里的大半画面来自《演义》；而史官笔下的三国在《三国志》里。<b>两本一起读</b>：先看小说怎么讲，再对一眼正史怎么写——这本手册教你把「七实三虚」的每一处虚都找出来。</div>
+</header>
+
+<div class="books" id="books"></div>
+
+<div class="h2"><span class="t">怎么读</span><span class="e">HOW TO READ</span></div>
+<div class="paths" id="paths"></div>
+
+<div class="h2"><span class="t">七实三虚对照墙</span><span class="e">FACT vs FICTION</span></div>
+<div class="cmp-hint">点开每一条，看小说与正史各怎么说；读过点右侧方框点亮。右上是分类筛选。</div>
+<div class="kbars" id="kbars"></div>
+<div id="cards"></div>
+
+<div class="h2"><span class="t">双进度</span><span class="e">PROGRESS</span></div>
+<div class="dprog">
+<div class="dp" style="--c:#8A7440"><span class="lb">演义 · 一百二十回</span><div class="bar"><div class="fi" id="b1"></div></div><span class="vv" id="v1">0/120</span></div>
+<div class="dp" style="--c:#A63B2A"><span class="lb">志 · 六十五卷</span><div class="bar"><div class="fi" id="b2"></div></div><span class="vv" id="v2">0/65</span></div>
+<div class="dp" style="--c:#2A2620"><span class="lb">对照墙</span><div class="bar"><div class="fi" id="b3"></div></div><span class="vv" id="v3">0/18</span></div>
+</div>
+
+<div class="h2"><span class="t">今日读这回</span><span class="e">TODAY</span></div>
+<div class="seg"><div class="s on" id="sgy">演义</div><div class="s" id="sgz">三国志</div></div>
+<div class="today" id="today">
+<div class="lab">TODAY · 点卡片换一签</div>
+<div class="pick" id="tp">——</div>
+<div class="sub2" id="ts">从未读过的回目里随机抽一签</div>
+<div id="rr" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#A63B2A;cursor:pointer">↻</div>
+</div>
+
+<div class="h2"><span class="t">演义 · 一百二十回</span><span class="e">ROMANCE 120</span></div>
+<div class="tabs" id="tabsY"></div>
+<div class="wl" id="wallY"></div>
+
+<div class="h2"><span class="t">三国志 · 六十五卷</span><span class="e">HISTORY 65</span></div>
+<div class="tabs" id="tabsZ"></div>
+<div class="wl" id="wallZ"></div>
+
+<div class="stamp-wrap" id="stampw"><div class="stamp"><small>THREE KINGDOMS COMPLETE</small>读罢三国</div></div>
+<footer>演义一百二十回回目据通行毛宗岗本 · 三国志六十五卷据中华书局点校本目录<br>对照条目为史学界通行结论，出处已逐条标注 · 逐条点亮为阅读打卡，非学术断代</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var PARTS=[["卷一 · 群雄逐鹿", 1, 33, "黄巾起义 · 讨董卓 · 群雄并起 · 官渡定北方"], ["卷二 · 赤壁风云", 34, 50, "三顾茅庐 · 长坂坡 · 舌战群儒 · 赤壁大火 · 华容道"], ["卷三 · 鼎足三立", 51, 85, "三气周瑜 · 取西川 · 定汉中 · 失荆州 · 夷陵 · 白帝托孤"], ["卷四 · 北伐南征", 86, 105, "七擒孟获 · 六出祁山 · 木牛流马 · 秋风五丈原"], ["卷五 · 三分归晋", 106, 120, "司马氏擅权 · 姜维九伐 · 灭蜀 · 平吴 · 一统"]];
+var HUI={"1": "宴桃园豪杰三结义 斩黄巾英雄首立功", "2": "张翼德怒鞭督邮 何国舅谋诛宦竖", "3": "议温明董卓叱丁原 馈金珠李肃说吕布", "4": "废汉帝陈留践位 谋董贼孟德献刀", "5": "发矫诏诸镇应曹公 破关兵三英战吕布", "6": "焚金阙董卓行凶 匿玉玺孙坚背约", "7": "袁绍磐河战公孙 孙坚跨江击刘表", "8": "王司徒巧使连环计 董太师大闹凤仪亭", "9": "除暴凶吕布助司徒 犯长安李傕听贾诩", "10": "勤王室马腾举义 报父仇曹操兴师", "11": "刘皇叔北海救孔融 吕温侯濮阳破曹操", "12": "陶恭祖三让徐州 曹孟德大战吕布", "13": "李傕郭汜大交兵 杨奉董承双救驾", "14": "曹孟德移驾幸许都 吕奉先乘夜袭徐郡", "15": "太史慈酣斗小霸王 孙伯符大战严白虎", "16": "吕奉先射戟辕门 曹孟德败师淯水", "17": "袁公路大起七军 曹孟德会合三将", "18": "贾文和料敌决胜 夏侯惇拨矢啖睛", "19": "下邳城曹操鏖兵 白门楼吕布殒命", "20": "曹阿瞒许田打围 董国舅内阁受诏", "21": "曹操煮酒论英雄 关公赚城斩车胄", "22": "袁曹各起马步三军 关张共擒王刘二将", "23": "祢正平裸衣骂贼 吉太医下毒遭刑", "24": "国贼行凶杀贵妃 皇叔败走投袁绍", "25": "屯土山关公约三事 救白马曹操解重围", "26": "袁本初败兵折将 关云长挂印封金", "27": "美髯公千里走单骑 汉寿侯五关斩六将", "28": "斩蔡阳兄弟释疑 会古城主臣聚义", "29": "小霸王怒斩于吉 碧眼儿坐领江东", "30": "战官渡本初败绩 劫乌巢孟德烧粮", "31": "曹操仓亭破本初 玄德荆州依刘表", "32": "夺冀州袁尚争锋 决漳河许攸献计", "33": "曹丕乘乱纳甄氏 郭嘉遗计定辽东", "34": "蔡夫人隔屏听密语 刘皇叔跃马过檀溪", "35": "玄德南漳逢隐沧 单福新野遇英主", "36": "玄德用计袭樊城 元直走马荐诸葛", "37": "司马徽再荐名士 刘玄德三顾草庐", "38": "定三分隆中决策 战长江孙氏报仇", "39": "荆州城公子三求计 博望坡军师初用兵", "40": "蔡夫人议献荆州 诸葛亮火烧新野", "41": "刘玄德携民渡江 赵子龙单骑救主", "42": "张翼德大闹长坂桥 刘豫州败走汉津口", "43": "诸葛亮舌战群儒 鲁子敬力排众议", "44": "孔明用智激周瑜 孙权决计破曹操", "45": "三江口曹操折兵 群英会蒋干中计", "46": "用奇谋孔明借箭 献密计黄盖受刑", "47": "阚泽密献诈降书 庞统巧授连环计", "48": "宴长江曹操赋诗 锁战船北军用武", "49": "七星坛诸葛祭风 三江口周瑜纵火", "50": "诸葛亮智算华容 关云长义释曹操", "51": "曹仁大战东吴兵 孔明一气周公瑾", "52": "诸葛亮智辞鲁肃 赵子龙计取桂阳", "53": "关云长义释黄汉升 孙仲谋大战张文远", "54": "吴国太佛寺看新郎 刘皇叔洞房续佳偶", "55": "玄德智激孙夫人 孔明二气周公瑾", "56": "曹操大宴铜雀台 孔明三气周公瑾", "57": "柴桑口卧龙吊丧 耒阳县凤雏理事", "58": "马孟起兴兵雪恨 曹阿瞒割须弃袍", "59": "许诸裸衣斗马超 曹操抹书间韩遂", "60": "张永年反难杨修 庞士元议取西蜀", "61": "赵云截江夺阿斗 孙权遗书退老瞒", "62": "取涪关杨高授首 攻雒城黄魏争功", "63": "诸葛亮痛哭庞统 张翼德义释严颜", "64": "孔明定计捉张任 杨阜借兵破马超", "65": "马超大战葭萌关 刘备自领益州牧", "66": "关云长单刀赴会 伏皇后为国捐生", "67": "曹操平定汉中地 张辽威震逍遥津", "68": "甘宁百骑劫魏营 左慈掷杯戏曹操", "69": "卜周易管辂知机 讨汉贼五臣死节", "70": "猛张飞智取瓦口隘 老黄忠计夺天荡山", "71": "占对山黄忠逸待劳 据汉水赵云寡胜众", "72": "诸葛亮智取汉中 曹阿瞒兵退斜谷", "73": "玄德进位汉中王 云长攻拔襄阳郡", "74": "庞令明抬榇决死战 关云长放水淹七军", "75": "关云长刮骨疗毒 吕子明白衣渡江", "76": "徐公明大战沔水 关云长败走麦城", "77": "玉泉山关公显圣 洛阳城曹操感神", "78": "治风疾神医身死 传遗命奸雄数终", "79": "兄逼弟曹植赋诗 侄陷叔刘封伏法", "80": "曹丕废帝篡炎刘 汉王正位续大统", "81": "急兄仇张飞遇害 雪弟恨先主兴兵", "82": "孙权降魏受九锡 先主征吴赏六军", "83": "战猇亭先主得仇人 守江口书生拜大将", "84": "陆逊营烧七百里 孔明巧布八阵图", "85": "刘先主遗诏托孤儿 诸葛亮安居平五路", "86": "难张温秦宓逞天辩 破曹丕徐盛用火攻", "87": "征南寇丞相大兴师 抗天兵蛮王初受执", "88": "渡泸水再缚番王 识诈降三擒孟获", "89": "武乡侯四番用计 南蛮王五次遭擒", "90": "驱巨兽六破蛮兵 烧藤甲七擒孟获", "91": "祭泸水汉相班师 伐中原武侯上表", "92": "赵子龙力斩五将 诸葛亮智取三城", "93": "姜伯约归降孔明 武乡侯骂死王朗", "94": "诸葛亮乘雪破羌兵 司马懿克日擒孟达", "95": "马谡拒谏失街亭 武侯弹琴退仲达", "96": "孔明挥泪斩马谡 周鲂断发赚曹休", "97": "讨魏国武侯再上表 破曹兵姜维诈献书", "98": "追汉军王双受诛 袭陈仓武侯取胜", "99": "诸葛亮大破魏兵 司马懿入寇西蜀", "100": "汉兵劫寨破曹真 武侯斗阵辱仲达", "101": "出陇上诸葛妆神 奔剑阁张郃中计", "102": "司马懿占北原渭桥 诸葛亮造木牛流", "103": "上方谷司马受困 五丈原诸葛禳星", "104": "陨大星汉丞相归天 见木像魏都督丧", "105": "武侯预伏锦囊计 魏主拆取承露盘", "106": "公孙渊兵败死襄平 司马懿诈病赚曹", "107": "魏主政归司马氏 姜维兵败牛头山", "108": "丁奉雪中奋短兵 孙峻席间施密计", "109": "困司马汉将奇谋 废曹芳魏家果报", "110": "文鸯单骑退雄兵 姜维背水破大敌", "111": "邓士载智败姜伯约 诸葛诞义讨司马昭", "112": "救寿春于诠死节 取长城伯约鏖兵", "113": "丁奉定计斩孙綝 姜维斗阵破邓艾", "114": "曹髦驱车死南阙 姜维弃粮胜魏兵", "115": "诏班师后主信谗 托屯田姜维避祸", "116": "钟会分兵汉中道 武侯显圣定军山", "117": "邓士载偷度阴平 诸葛瞻战死绵竹", "118": "哭祖庙一王死孝 入西川二士争功", "119": "假投降巧计成虚话 再受禅依样画", "120": "荐杜预老将献新谋 降孙皓三分归一"};
+var JUAN={"wei": ["武帝纪第一", "文帝纪第二", "明帝纪第三", "三少帝纪第四", "后妃传第五", "董二袁刘传第六", "吕布张邈臧洪传第七", "二公孙陶四张传第八", "诸夏侯曹传第九", "荀彧荀攸贾诩传第十", "袁张凉国田王邴管传第十一", "崔毛徐何邢鲍司马传第十二", "钟繇华歆王朗传第十三", "程郭董刘蒋刘传第十四", "刘司马梁张温贾传第十五", "任苏杜郑仓传第十六", "张乐于张徐传第十七", "二李臧文吕许典二庞阎传第十八", "任城陈萧王传第十九", "武文世王公传第二十", "王卫二刘傅传第二十一", "桓二陈徐卫卢传第二十二", "和常杨杜赵裴传第二十三", "韩崔高孙王传第二十四", "辛毗杨阜高堂隆传第二十五", "满田牵郭传第二十六", "徐胡二王传第二十七", "王毌丘诸葛邓钟传第二十八", "方技传第二十九", "乌丸鲜卑东夷传第三十"], "shu": ["刘二牧传第一", "先主传第二", "后主传第三", "二主妃子传第四", "诸葛亮传第五", "关张马黄赵传第六", "庞统法正传第七", "许麋孙简伊秦传第八", "董刘马陈董吕传第九", "刘彭廖李刘魏杨传第十", "霍王向张杨费传第十一", "杜周杜许孟来尹李谯郤传第十二", "黄李吕马王张传第十三", "蒋琬费祎姜维传第十四", "邓张宗杨传第十五"], "wu": ["孙破虏讨逆传第一", "吴主传第二", "三嗣主传第三", "刘繇太史慈士燮传第四", "妃嫔传第五", "宗室传第六", "张顾诸葛步传第七", "张严程阚薛传第八", "周瑜鲁肃吕蒙传第九", "程黄韩蒋周陈董甘凌徐潘丁传第十", "朱治朱然吕范朱桓传第十一", "虞陆张骆陆吾朱传第十二", "陆逊传第十三", "吴主五子传第十四", "贺全吕周钟离传第十五", "潘濬陆凯传第十六", "是仪胡综传第十七", "吴范刘惇赵达传第十八", "诸葛滕二孙濮阳传第十九", "王楼贺韦华传第二十"]};
+var CARDS=[{"t": "温酒斩华雄", "k": "移花接木", "yy": "关羽出帐，酒尚温时提华雄头掷于帐前，一战名震诸侯。", "sz": "斩华雄的是孙坚。《三国志·孙破虏讨逆传》：「（孙）坚复相收兵，合战于阳人，大破卓军，枭其都督华雄等。」", "src": "志卷四十六"}, {"t": "草船借箭", "k": "移花接木", "yy": "孔明立军令状，二十只草船三天「借」来十万支箭。", "sz": "原型是孙权。建安十八年濡须之战，孙权乘船观曹营，曹操令乱箭齐发，船身一侧受箭偏重，孙权掉头让另一侧受箭，平衡后从容而返——比赤壁之战还晚五年。", "src": "吴主传裴注引《魏略》"}, {"t": "空城计", "k": "虚构存疑", "yy": "诸葛亮大开城门焚香抚琴，吓退司马懿二十万大军。", "sz": "正史无载。出自西晋郭冲「条亮五事」，裴松之作注时逐条驳斥：司马懿二十万人在，何不驻兵观察？真正用过类似空营计的是赵云（汉水之战，「一身是胆」由此而来）。", "src": "裴松之注"}, {"t": "借东风", "k": "纯属虚构", "yy": "七星坛诸葛祭风，东南风大起。", "sz": "无载。隆冬长江偶有东南风是自然现象；赤壁火攻的主力是周瑜的决断与黄盖的诈降。", "src": "——"}, {"t": "三气周瑜", "k": "形象翻案", "yy": "周瑜气量狭小，被诸葛亮三气吐血，临终喊「既生瑜，何生亮」。", "sz": "《周瑜传》说他「性度恢廓」；老将程普多次欺他，他毫不计较，程普最后感叹：「与周公瑾交，若饮醇醪，不觉自醉。」建安十五年他整军入蜀途中病逝于巴丘，年三十六。", "src": "志卷五十四"}, {"t": "单刀赴会", "k": "形象翻案", "yy": "关云长提刀赴宴，谈笑自若震慑东吴。", "sz": "会是真的，主角是鲁肃。双方各驻兵百步之外、诸将单刀相见；席间鲁肃「厉声呵之，辞色甚切」，关羽无言以对，最终以湘水划界。历史上的鲁肃是提出「榻上策」的东吴战略家。", "src": "志卷五十四"}, {"t": "貂蝉", "k": "查无此人", "yy": "闭月之貌，连环计的关键一环。", "sz": "《三国志》《后汉书》都没有「貂蝉」二字。王允联合吕布诛董卓确有其事，靠的是吕布与董卓侍婢私通的旧怨，不靠美人计。", "src": "后汉书·董卓传"}, {"t": "过五关斩六将", "k": "虚构", "yy": "关羽挂印封金，过东岭、洛阳等五关，斩六将，千里寻兄。", "sz": "无载，且地理走不通：当时刘备在许都以南的汝南，关羽直下即可；小说却让他先北上洛阳再折向东，绕出近三千里「之」字。", "src": "——"}, {"t": "桃园结义", "k": "演绎放大", "yy": "不求同年同月同日生，但求同年同月同日死。", "sz": "正史无结拜记载，只有四个字：「恩若兄弟」。且按生年推算，关羽很可能比刘备还大一岁。", "src": "志卷三十六"}, {"t": "三顾茅庐", "k": "演绎放大", "yy": "三次拜访、雪中站立、隆中对策长篇铺陈。", "sz": "正史只有六个字：「先主遂诣亮，凡三往，乃见。」但《隆中对》全文确实载于《诸葛亮传》，战略是真的。", "src": "志卷三十五"}, {"t": "蒋干盗书", "k": "形象翻案", "yy": "群英会上中反间计，盗伪书害死蔡瑁、张允。", "sz": "蒋干确曾为曹操劝降周瑜——但在赤壁之后。他见周瑜坦荡，未发一言游说，回报曹操「雅量高致，非言辞所可间」。这个成语的出处就是他。", "src": "江表传"}, {"t": "长坂坡七进七出", "k": "夸张放大", "yy": "赵子龙怀抱阿斗，七进七出，斩曹营名将五十余员。", "sz": "《赵云传》只有一句：「云身抱弱子，即后主也，保护甘夫人，皆得免难。」护主是真的，七进七出与斩将数字是小说夸张。", "src": "志卷三十六"}, {"t": "喝断当阳桥", "k": "夸张放大", "yy": "张飞一声大喝，桥断水倒流，夏侯杰惊死落马。", "sz": "「飞据水断桥，瞋目横矛」——横矛断桥喝退追兵是真的；桥是张飞拆的，吓死人没有记载。", "src": "志卷三十六"}, {"t": "刮骨疗毒", "k": "移花接木", "yy": "华佗刮骨去毒，关羽饮酒下棋谈笑自若。", "sz": "刮骨疗毒确有其事，医生是无名军医——正史未记其名。华佗死于建安十三年之前，与关羽负伤的时间对不上。谈笑自若是真的。", "src": "志卷三十六"}, {"t": "火烧博望坡", "k": "移花接木", "yy": "「博望坡军师初用兵」——诸葛亮出山第一功。", "sz": "烧博望的是刘备本人：自烧屯营伪遁，诱夏侯惇入伏——此事发生时，孔明尚未出山。", "src": "志卷三十二先主传"}, {"t": "骂死王朗", "k": "形象翻案", "yy": "武乡侯阵前一番痛骂，王朗撞死于马下。", "sz": "王朗是汉末大经学家，位至司徒。他太和二年（228）病逝于洛阳，从未与诸葛亮阵前交锋。", "src": "志卷十三"}, {"t": "赤壁八十三万", "k": "数字放大", "yy": "曹操号称八十三万大军，投鞭断江。", "sz": "周瑜战前估算：「彼所将中国人不过十五六万，且军已久疲；所得表众亦极七八万耳。」曹军参战约七万上下，孙刘联军约五万。", "src": "志卷五十四"}, {"t": "青龙偃月刀", "k": "道具虚构", "yy": "八十二斤青龙偃月刀，赤兔宝马。", "sz": "偃月刀宋代才出现，汉末骑兵主用矛、戟。《关羽传》原文是「刺颜良于万众之中」——一个「刺」字透出兵器真相。赤兔确曾是吕布之马。", "src": "志卷三十六"}];
+var PATHS=[["路径一 · 先演义后志", "把《演义》当故事读：120 回一口气读进人物与情节，建立「三国地图」。再翻开《三国志》逐条纠偏——每发现一处「原来不是这样」，都是考据的乐趣。"], ["路径二 · 版本这样选", "演义：通行毛宗岗评本（120 回，就是今天常见版本），初读用文白对照版。志：中华书局点校本——裴松之注是灵魂，注文比正文还多，等于一本书附赠三本史料。"], ["路径三 · 纪传体读法", "《三国志》不是编年故事，是人物拼图：先读三篇「纪」（武帝/先主/吴主）搭时间轴，再挑感兴趣的「传」读一个人的一生；同一战役，把魏蜀吴三边传记对照着读，全景就拼出来了。"]];
+var TWOBOOKS=[{"n": "三国演义", "sub": "ROMANCE", "who": "罗贯中 · 元末明初", "what": "长篇章回小说 · 一百二十回", "tag": "七分实事，三分虚构（章学诚语）", "desc": "以刘备集团为主线的历史演义。尊刘贬曹，诸葛亮「多智而近妖」，读的是叙事艺术。", "color": "#8A7440"}, {"n": "三国志", "sub": "HISTORY", "who": "陈寿 · 西晋", "what": "纪传体断代史 · 六十五卷", "tag": "前四史之一 · 裴松之作注", "desc": "魏书三十、蜀书十五、吴书二十。以魏为正统，笔墨克制的正史，读的是历史本相。", "color": "#A63B2A"}];
+var KEY="sanguo_read_v1";
+var read={Y:{},Z:{},C:{}};
+try{read=JSON.parse(localStorage.getItem(KEY))||read}catch(e){}
+function save(){localStorage.setItem(KEY,JSON.stringify(read))}
+function toast(s){var t=document.getElementById("toast");t.textContent=s;t.classList.add("show");clearTimeout(t._tm);t._tm=setTimeout(function(){t.classList.remove("show")},1700)}
+function chkSVG(){return '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.4L13 4.5" stroke="#FFFBF2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
+
+/* 双书卡 */
+(function(){var w=document.getElementById("books");
+TWOBOOKS.forEach(function(b){var d=document.createElement("div");d.className="bk";d.style.setProperty("--c",b.color);
+d.innerHTML='<div class="nm">'+b.n+'</div><div class="en2">'+b.sub+'</div><div class="row"><b>'+b.who+'</b></div><div class="row"><b>'+b.what+'</b></div><div class="row">'+b.desc+'</div><span class="tg">'+b.tag+"</span>";w.appendChild(d)});
+var v=document.createElement("div");v.className="vs";v.innerHTML="<span>对</span><span>读</span>";w.appendChild(v);
+/* vs 放中间：重排 */
+var bs=w.querySelectorAll(".bk");
+if(bs.length===2){w.insertBefore(v,bs[1]);}
+})();
+
+/* 读法 */
+(function(){var w=document.getElementById("paths");
+PATHS.forEach(function(p){var d=document.createElement("div");d.className="pt";d.innerHTML='<div class="h">'+p[0]+'</div><div class="d">'+p[1]+"</div>";w.appendChild(d)})}
+)();
+
+/* 对照墙 */
+var kFilter="all";
+var kMap={"移花接木":"yi","虚构":"xu","虚构存疑":"xu","纯属虚构":"xu","形象翻案":"an","演绎放大":"yi","夸张放大":"yi","数字放大":"yi","道具虚构":"xu","查无此人":"xu"};
+(function(){
+var kb=document.getElementById("kbars");
+var ks=[["all","全部",CARDS.length]];
+["yi","xu","an"].forEach(function(k){
+ var names={"yi":"移接/放大","xu":"纯属虚构","an":"形象翻案"};
+ var cnt=CARDS.filter(function(c){return kMap[c.k]===k}).length;
+ ks.push([k,names[k],cnt]);
+});
+ks.forEach(function(x){
+ var b=document.createElement("div");b.className="kb"+(x[0]==="all"?" on":"");b.dataset.k=x[0];b.innerHTML=x[1]+"<i>"+x[2]+"</i>";
+ b.onclick=function(){document.querySelectorAll(".kb").forEach(function(e){e.classList.toggle("on",e===b)});kFilter=x[0];renderCards()};
+ kb.appendChild(b);
+});
+})();
+function renderCards(){
+ var w=document.getElementById("cards");w.innerHTML="";
+ CARDS.forEach(function(c,i){
+  if(kFilter!=="all"&&kMap[c.k]!==kFilter)return;
+  var kcls=kMap[c.k];
+  var d=document.createElement("div");
+  d.className="cd"+(read.C[i]?" on":"");
+  d.innerHTML='<div class="hd"><div class="ck">'+chkSVG()+'</div><div class="tt">'+c.t+'</div><span class="kk '+kcls+'">'+c.k+'</span></div><div class="bd"><h5 class="yy">演义 · 这么写</h5><p>'+c.yy+'</p><h5 class="sz">正史 · 这么载</h5><p>'+c.sz+'</p><div class="src">出自 · '+c.src+'</div></div>';
+  d.querySelector(".hd").addEventListener("click",function(ev){
+   if(ev.target.closest(".kk"))return;
+   if(ev.target.closest(".ck")){read.C[i]=!read.C[i];if(!read.C[i])delete read.C[i];save();d.classList.toggle("on",!!read.C[i]);sync();if(Object.keys(read.C).length===CARDS.length)toast("对照墙全点亮 ✓");}
+   else d.classList.toggle("open");
+  });
+  w.appendChild(d);
+ });
+}
+renderCards();
+
+/* 演义墙 */
+var curPart=0;
+(function(){
+var tb=document.getElementById("tabsY");
+PARTS.forEach(function(p,i){
+ var b=document.createElement("div");b.className="tb"+(i===0?" on":"");b.innerHTML=p[0].split(" · ")[1]+"<i>"+p[1]+"–"+p[2]+"</i>";
+ b.onclick=function(){curPart=i;document.querySelectorAll("#tabsY .tb").forEach(function(e){e.classList.toggle("on",e===b)});renderWallY()};
+ tb.appendChild(b);
+});
+})();
+function renderWallY(){
+ var w=document.getElementById("wallY");w.innerHTML="";
+ var p=PARTS[curPart];
+ var desc=document.createElement("div");desc.className="part-desc";desc.textContent=p[3];w.appendChild(desc);
+ for(var n=p[1];n<=p[2];n++){
+  var t=HUI[String(n)]||HUI[n];
+  var d=document.createElement("div");
+  d.className="rw"+(read.Y[n]?" on":"");
+  d.innerHTML='<div class="ck">'+chkSVG()+'</div><div class="no">第'+n+'回</div><div class="ti">'+t+"</div>";
+  (function(n,d){d.addEventListener("click",function(){read.Y[n]=!read.Y[n];if(!read.Y[n])delete read.Y[n];save();d.classList.toggle("on",!!read.Y[n]);sync()})})(n,d);
+  w.appendChild(d);
+ }
+}
+renderWallY();
+
+/* 志墙 */
+var curShu=0;
+var SHU=[["wei","魏书 · 三十卷"],["shu","蜀书 · 十五卷"],["wu","吴书 · 二十卷"]];
+(function(){
+var tb=document.getElementById("tabsZ");
+SHU.forEach(function(s,i){
+ var b=document.createElement("div");b.className="tb"+(i===0?" on":"");b.innerHTML=s[1].split(" · ")[0]+"<i>"+JUAN[s[0]].length+" 卷</i>";
+ b.onclick=function(){curShu=i;document.querySelectorAll("#tabsZ .tb").forEach(function(e){e.classList.toggle("on",e===b)});renderWallZ()};
+ tb.appendChild(b);
+});
+})();
+function renderWallZ(){
+ var w=document.getElementById("wallZ");w.innerHTML="";
+ var arr=JUAN[SHU[curShu][0]];
+ arr.forEach(function(name,i){
+  var n=curShu*0+i+1; /* 用 shu+序号 做全局键 */
+  var gid=SHU[curShu][0]+"_"+(i+1);
+  var d=document.createElement("div");
+  d.className="rw"+(read.Z[gid]?" on":"");
+  d.innerHTML='<div class="ck">'+chkSVG()+'</div><div class="no">卷'+String(i+1).padStart(2,"0")+'</div><div class="ti">'+name+"</div>";
+  (function(gid,d){d.addEventListener("click",function(){read.Z[gid]=!read.Z[gid];if(!read.Z[gid])delete read.Z[gid];save();d.classList.toggle("on",!!read.Z[gid]);sync()})})(gid,d);
+  w.appendChild(d);
+ });
+}
+renderWallZ();
+
+/* 进度 */
+function sync(){
+ var ny=Object.keys(read.Y).length,nz=Object.keys(read.Z).length,nc=Object.keys(read.C).length;
+ document.getElementById("v1").textContent=ny+"/120";
+ document.getElementById("v2").textContent=nz+"/65";
+ document.getElementById("v3").textContent=nc+"/18";
+ document.getElementById("b1").style.width=(ny/120*100)+"%";
+ document.getElementById("b2").style.width=(nz/65*100)+"%";
+ document.getElementById("b3").style.width=(nc/CARDS.length*100)+"%";
+ var total=ny===120&&nz===65&&nc===CARDS.length;
+ document.getElementById("stampw").style.display=total?"block":"none";
+ if(total)celebrate();
+}
+function celebrate(){
+ for(var i=0;i<60;i++)(function(){
+  var s=document.createElement("div");
+  s.style.cssText="position:fixed;z-index:99;left:"+(Math.random()*100)+"vw;top:-12px;width:"+(5+Math.random()*7)+"px;height:"+(5+Math.random()*7)+"px;background:"+(["#A63B2A","#C9A24A","#2A2620"][Math.floor(Math.random()*3)])+";border-radius:2px;pointer-events:none;transition:transform 2.6s linear,opacity 2.6s";
+  document.body.appendChild(s);
+  requestAnimationFrame(function(){s.style.transform="translateY("+(innerHeight+30)+"px) rotate("+(Math.random()*540)+"deg)";s.style.opacity="0"});
+  setTimeout(function(){s.remove()},2800);
+ })();
+}
+
+/* 今日抽签 */
+var todayBook="Y";
+document.getElementById("sgy").onclick=function(){todayBook="Y";this.classList.add("on");document.getElementById("sgz").classList.remove("on");roll()};
+document.getElementById("sgz").onclick=function(){todayBook="Z";this.classList.add("on");document.getElementById("sgy").classList.remove("on");roll()};
+function roll(){
+ if(todayBook==="Y"){
+  var pool=[];
+  for(var n=1;n<=120;n++)if(!read.Y[n])pool.push(n);
+  var n=pool.length?pool[Math.floor(Math.random()*pool.length)]:Math.floor(Math.random()*120)+1;
+  document.getElementById("tp").textContent="第"+n+"回 · "+(HUI[String(n)]||"");
+  document.getElementById("ts").textContent=PARTS.find(function(p){return n>=p[1]&&n<=p[2]})[0]+" · "+(pool.length?"未读":"已全读，重温一签");
+ }else{
+  var all=[];
+  ["wei","shu","wu"].forEach(function(k){JUAN[k].forEach(function(v,i){all.push([k,i+1,v])})});
+  var pool=all.filter(function(x){return !read.Z[x[0]+"_"+x[1]]});
+  var c=pool.length?pool[Math.floor(Math.random()*pool.length)]:all[Math.floor(Math.random()*all.length)];
+  var shuName={"wei":"魏书","shu":"蜀书","wu":"吴书"}[c[0]];
+  document.getElementById("tp").textContent=c[2];
+  document.getElementById("ts").textContent=shuName+" · 卷"+c[1]+" · "+(pool.length?"未读":"已全读，重温一签");
+ }
+}
+document.getElementById("rr").onclick=function(ev){ev.stopPropagation();roll();toast("已换一签")};
+document.getElementById("today").addEventListener("click",function(ev){
+ if(ev.target.id==="rr")return;
+ var txt=document.getElementById("tp").textContent;
+ var m=txt.match(/第(\d+)回/);
+ if(m){var n=+m[1];
+  /* 跳到对应卷并滚动到该回 */
+  var pi=PARTS.findIndex(function(p){return n>=p[1]&&n<=p[2]});
+  if(pi>=0){curPart=pi;var tbs=document.querySelectorAll("#tabsY .tb");tbs.forEach(function(e,i){e.classList.toggle("on",i===pi)});renderWallY();
+   var rows=document.querySelectorAll("#wallY .rw");
+   var idx=n-PARTS[pi][1];
+   if(rows[idx]){rows[idx].scrollIntoView({block:"center",behavior:"smooth"});toast("已定位 · 第"+n+"回")}
+  }
+ }else{
+  var name=txt;
+  var found=null;
+  ["wei","shu","wu"].forEach(function(k){JUAN[k].forEach(function(v,i){if(v===name)found=[k,i]})});
+  if(found){var si={"wei":0,"shu":1,"wu":2}[found[0]];curShu=si;
+   var tbs=document.querySelectorAll("#tabsZ .tb");tbs.forEach(function(e,i){e.classList.toggle("on",i===si)});renderWallZ();
+   var rows=document.querySelectorAll("#wallZ .rw");
+   if(rows[found[1]]){rows[found[1]].scrollIntoView({block:"center",behavior:"smooth"});toast("已定位 · "+name)}
+  }
+ }
+});
+sync();roll();
+</script>
+</body>
+</html>
